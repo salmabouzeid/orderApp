@@ -1,3 +1,3 @@
-interface deliveryStrategy {
+public interface deliveryStrategy {
     void deliver();
 }
