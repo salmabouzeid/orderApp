@@ -1,0 +1,3 @@
+interface deliveryStrategy {
+    void deliver();
+}
