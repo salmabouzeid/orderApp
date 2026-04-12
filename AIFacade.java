@@ -36,22 +36,20 @@ public class AIFacade {
                 + "/chat/completions?api-version="
                 + API_VERSION;
 
-        String body = """
-                {
-                  "messages": [
-                    {
-                      "role": "developer",
-                      "content": "Reply in 6 short lines only: Estimated Calories, Protein, Carbs, Fat, Better Option, Health Tip."
-                    },
-                    {
-                      "role": "user",
-                      "content": %s
-                    }
-                  ],
-                  "max_completion_tokens": 1200,
-                  "reasoning_effort": "minimal"
-                }
-                """.formatted(jsonEscape(prompt));
+        String body = "{\n" +
+        "  \"messages\": [\n" +
+        "    {\n" +
+        "      \"role\": \"developer\",\n" +
+        "      \"content\": \"Reply in 6 short lines only: Estimated Calories, Protein, Carbs, Fat, Better Option, Health Tip.\"\n" +
+        "    },\n" +
+        "    {\n" +
+        "      \"role\": \"user\",\n" +
+        "      \"content\": " + jsonEscape(prompt) + "\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"max_completion_tokens\": 1200,\n" +
+        "  \"reasoning_effort\": \"minimal\"\n" +
+        "}";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

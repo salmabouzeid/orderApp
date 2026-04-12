@@ -6,17 +6,17 @@ This project is a Java console application for food ordering. The user can choos
 The system uses Azure OpenAI to return estimated calories, protein, carbs, fat, a better option, and a health tip.
 
 ## Requirements
-- Java JDK 11 or higher
+- Java JDK 15 or higher
 - Azure OpenAI API key
 
 ## 1. Install Dependencies
 No additional dependencies need to be installed.
-Ensure Java JDK 11 or higher is installed.
+Ensure Java JDK 15 or higher is installed.
 
 Check Java version:
 java -version
 
-## 2. Set API Key
+## 2. Set API Key (given by professor)
 Mac:
 export AZURE_API_KEY=*******
 
@@ -24,12 +24,7 @@ Windows:
 set AZURE_API_KEY=*********
 
 ## 3. Run the Application
-
-Compile all Java files:
-javac *.java
-
-Run the program:
-java main
+Run the java program by clicking run.
 
 ## How It Works
 1. The menu is displayed with food prices.

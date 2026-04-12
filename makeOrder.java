@@ -7,9 +7,9 @@ public class makeOrder {
     public void order() {
 
         System.out.println("=== MENU ===");
-        System.out.println("1. Burger - 20");
-        System.out.println("2. Pizza - 30");
-        System.out.println("3. Pasta - 45");
+        System.out.println("1. Burger - 20qr");
+        System.out.println("2. Pizza - 30qr");
+        System.out.println("3. Pasta - 45qr");
 
         int choiceNum = askNumber("Choose your food (1-3): ", 1, 3);
 
@@ -34,8 +34,8 @@ public class makeOrder {
         }
 
         System.out.println("\nExtras:");
-        System.out.println("Extra cheese - 5");
-        System.out.println("Extra sauce - 3");
+        System.out.println("Extra cheese + 5qr");
+        System.out.println("Extra sauce + 3qr");
 
         if (askYesNo("Add cheese? (yes/no): ")) {
             food = new cheese(food);
@@ -63,7 +63,7 @@ public class makeOrder {
 
             String orderDetails =
                     "Food: " + food.getDescription() +
-                    ", Total Price: " + food.getPrice() +
+                    ", Total Price: " + food.getPrice() + "qr "+
                     ", Delivery: " + deliveryChoice;
 
             String suggestion = ai.getSuggestion(orderDetails);
@@ -74,7 +74,7 @@ public class makeOrder {
 
         System.out.println("\n--- ORDER SUMMARY ---");
         System.out.println("Food: " + food.getDescription());
-        System.out.println("Total Price: " + food.getPrice());
+        System.out.println("Total Price: " + food.getPrice()+ "qr");
 
         order.notifyObservers("Your order is ready!");
         delivery.deliver();
