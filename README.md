@@ -24,6 +24,7 @@ Windows:
 set AZURE_API_KEY=*********
 
 ## 3. Run the Application
+Rename food.java to Food.java (name not updating on github for unknown reasons.)
 Run the java program by clicking run.
 
 ## How It Works
