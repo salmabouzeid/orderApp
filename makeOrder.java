@@ -1,14 +1,30 @@
-
 import java.util.Scanner;
 
 public class makeOrder {
-    public void order(){
 
+    private final Scanner sc = new Scanner(System.in);
 
-        Scanner sc = new Scanner(System.in);
+    public void order() {
 
-        System.out.println("Enter food (burger / pizza / pasta): ");
-        String choice = sc.nextLine();
+        System.out.println("=== MENU ===");
+        System.out.println("1. Burger - 20");
+        System.out.println("2. Pizza - 30");
+        System.out.println("3. Pasta - 45");
+
+        int choiceNum = askNumber("Choose your food (1-3): ", 1, 3);
+
+        String choice = "";
+        switch (choiceNum) {
+            case 1:
+                choice = "burger";
+                break;
+            case 2:
+                choice = "pizza";
+                break;
+            case 3:
+                choice = "pasta";
+                break;
+        }
 
         Food food = foodFactory.createFood(choice);
 
@@ -17,22 +33,21 @@ public class makeOrder {
             return;
         }
 
-        System.out.println("Add cheese? (yes/no): ");
-        if (sc.nextLine().equalsIgnoreCase("yes")) {
+        System.out.println("\nExtras:");
+        System.out.println("Extra cheese - 5");
+        System.out.println("Extra sauce - 3");
+
+        if (askYesNo("Add cheese? (yes/no): ")) {
             food = new cheese(food);
         }
 
-        System.out.println("Add sauce? (yes/no): ");
-        if (sc.nextLine().equalsIgnoreCase("yes")) {
+        if (askYesNo("Add sauce? (yes/no): ")) {
             food = new sauce(food);
         }
 
-
-        System.out.println("Delivery method (home / pickup): ");
-        String deliveryChoice = sc.nextLine();
+        String deliveryChoice = askDeliveryMethod("Delivery method (home / pickup): ");
 
         deliveryStrategy delivery;
-
         if (deliveryChoice.equalsIgnoreCase("home")) {
             delivery = new homeDelivery();
         } else {
@@ -43,26 +58,71 @@ public class makeOrder {
         customer customer = new customer();
         order.addObserver(customer);
 
-        System.out.println("Would you like a recommendation? (yes/no): ");
-        if (sc.nextLine().equalsIgnoreCase("yes")) {
-             AIFacade ai = new AIFacade();
-             String suggestion = ai.getSuggestion(food.getDescription());
-             System.out.println(suggestion);
+        if (askYesNo("Would you like AI nutrition analysis? (yes/no): ")) {
+            AIFacade ai = new AIFacade();
 
+            String orderDetails =
+                    "Food: " + food.getDescription() +
+                    ", Total Price: " + food.getPrice() +
+                    ", Delivery: " + deliveryChoice;
 
+            String suggestion = ai.getSuggestion(orderDetails);
+
+            System.out.println("\n--- AI RECOMMENDATION ---");
+            System.out.println(suggestion);
         }
 
         System.out.println("\n--- ORDER SUMMARY ---");
         System.out.println("Food: " + food.getDescription());
         System.out.println("Total Price: " + food.getPrice());
+
         order.notifyObservers("Your order is ready!");
-
-
         delivery.deliver();
         order.notifyObservers("Hope you enjoyed your order!");
-
-        sc.close();
     }
-    
-    
+
+    private boolean askYesNo(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = sc.nextLine().trim().toLowerCase();
+
+            if (input.equals("yes")) {
+                return true;
+            } else if (input.equals("no")) {
+                return false;
+            } else {
+                System.out.println("Invalid input. Please enter yes or no.");
+            }
+        }
+    }
+
+    private int askNumber(String message, int min, int max) {
+        while (true) {
+            System.out.print(message);
+            try {
+                int input = Integer.parseInt(sc.nextLine());
+
+                if (input >= min && input <= max) {
+                    return input;
+                } else {
+                    System.out.println("Please enter a number between " + min + " and " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number.");
+            }
+        }
+    }
+
+    private String askDeliveryMethod(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = sc.nextLine().trim().toLowerCase();
+
+            if (input.equals("home") || input.equals("pickup")) {
+                return input;
+            } else {
+                System.out.println("Invalid input. Please enter home or pickup.");
+            }
+        }
+    }
 }
